@@ -1,7 +1,8 @@
 repos:
--   repo: https://github.com/Sripriya1197/terraform-module.git
-    rev: v1.0.0
+  - repo: https://github.com/Sripriya1197/precommit
+    rev: v2.1.0
     hooks:
-    -   id: terraform-fmt
-    -   id: sops-encrypt
+      - id: terraform-fmt
+  #     - id: sops-encrypt
  
+
