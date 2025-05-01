@@ -30,7 +30,7 @@ jobs:
       with:
         terraform_version: ${{ env.TF_VERSION }}
 
-    - name: 'Install TFLint'
+    - name: 'Install TFlint'
       run: |
         curl -sLo tflint.zip https://github.com/terraform-linters/tflint/releases/download/v${{ env.TFLINT_VERSION }}/tflint_linux_amd64.zip
         unzip tflint.zip -d /usr/local/bin/
