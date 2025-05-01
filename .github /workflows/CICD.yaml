@@ -44,7 +44,7 @@ jobs:
     - name: 'Install TFlint'
       run: |
         curl -sLo tflint.zip https://github.com/terraform-linters/tflint/releases/download/v${{ env.TFLINT_VERSION }}/tflint_linux_amd64.zip
-        unzip tflint.zip -d /usr/local/bin/
+        unzip tflint.zip -d /usr/local/bin/ 
         tflint --version
 
     - name: 'Install tfsec'
