@@ -1,9 +1,10 @@
-name: Terraform CI/CD 
+name: Terraform CI/CD
 
 on:
   push:
     branches:
       - main
+
 jobs:
   terraform:
     name: 'Terraform Lint, Security Check, and Deploy'
@@ -12,20 +13,17 @@ jobs:
     env:
       AWS_REGION: 'ap-south-1'
       TF_VERSION: '1.4.0'
-      TFLINT_VERSION: '0.46.1'  # Updated to a more recent version
-      TFSEC_VERSION: '1.28.1'   # Updated to a more recent version
+      TFLINT_VERSION: '0.46.1'  
+      TFSEC_VERSION: '1.28.1'   
 
     steps:
-    - name: 'Checkout GitHub repository'
-      uses: actions/checkout@v2  
-
-    - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-region: ${{ secrets.AWS_REGION}}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+    - name: 'Configure AWS credentials'
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-session-token: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
 
     - name: 'Set up Terraform'
       uses: hashicorp/setup-terraform@v1
@@ -46,25 +44,25 @@ jobs:
         tfsec --version
 
     - name: 'Terraform Init'
-      run: terraform init
+      run: terraform init ./test/S3
 
     - name: 'Terraform Format'
-      run: terraform fmt
+      run: terraform fmt ./test/S3
 
     - name: 'Terraform Validate'
-      run: terraform validate
+      run: terraform validate ./test/S3
 
     - name: 'TFLint'
       run: |
-        tflint --init
-        tflint
+        tflint --init ./test/S3
+        tflint ./test/S3
 
     - name: 'tfsec'
-      run: tfsec .
+      run: tfsec ./test/S3
 
     - name: 'Terraform Plan'
-      run: terraform plan -out=tfplan
+      run: terraform plan -out=tfplan ./test/S3
 
     - name: 'Terraform Apply'
       if: github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve tfplan
+      run: terraform apply -auto-approve ./test/S3
