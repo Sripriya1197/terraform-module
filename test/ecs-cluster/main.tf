@@ -2,7 +2,7 @@ module "ecs" {
   source       = "terraform-aws-modules/ecs/aws"
   cluster_name = "my-ecs-cluster-tf"
 
-  cluster = true
+
 
   # Define the ECS service in the services block
   services = {
