@@ -48,7 +48,8 @@ jobs:
          terraform show test/s3/tfplan
 
       - name: Show Terraform Plan
-        run: terraform show test/s3/tfplan
+        run: terraform -chdir=test/s3 show tfplan
+
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
