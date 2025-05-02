@@ -6,8 +6,8 @@ module "ecs" {
 
   # Define the ECS service in the services block
   services = {
-    github-app = {
-      name            = "github-app"               
+    sample-app = {
+      name            = "sample-app"               
       cpu             = 256
       memory          = 512
       desired_count   = 1                        
@@ -17,8 +17,8 @@ module "ecs" {
       # Container Definitions (correct format as a list of maps)
       container_definitions = [
         {
-          name         = "github-container"
-          image        = "273354669111.dkr.ecr.ap-south-1.amazonaws.com/github-action:1.1.1"
+          name         = "sampleapp-container"
+          image        = "273354669111.dkr.ecr.ap-south-1.amazonaws.com/sample_app:1.0.0"
           essential    = true
           portMappings = [
             {
