@@ -7,21 +7,24 @@ module "ecs_cluster" {
 }
 
 module "ecs_task_definition" {
-  source = "../../.modules/aws/ecs"
+  source = "terraform-aws-modules/ecs/aws"
   
-  family                 = "my-ecs-task"
-  container_definitions  = jsonencode([{
-    name      = "my-ecr-container"
+  # ECS Task Definition Configuration
+  family                   = "my-ecs-task"
+  container_definitions    = jsonencode([{
+    name      = "my-ecs-container"
     image     = "273354669111.dkr.ecr.ap-south-1.amazonaws.com/github-action:1.1.1"
+    essential = true
     portMappings = [{
       containerPort = 80
       protocol      = "tcp"
     }]
   }])
-  cpu                    = "256"  
-  memory                 = "512"  
+  
+  cpu                      = "256"
+  memory                   = "512"
   requires_compatibilities = ["FARGATE"]
-  network_mode           = "awsvpc"
+  network_mode             = "awsvpc"
 }
 
 module "ecs_service" {
