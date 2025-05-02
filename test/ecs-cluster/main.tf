@@ -1,8 +1,9 @@
 module "ecs_cluster" {
   source = "../../.modules/aws/ecs"
-  name               = "my-ecs-cluster"
+  cluster_name = "my-ecs-cluster"
   capacity_providers = ["FARGATE"]
-  create_cluster     = true
+  enable_managed_tags = true
+  propagate_tags = "TASK_DEFINITION"
 }
 
 module "ecs_task_definition" {
