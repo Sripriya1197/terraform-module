@@ -6,7 +6,7 @@ module "ecs_cluster" {
 }
 
 module "ecs_task_definition" {
-  source = "terraform-aws-modules/ecs/aws//modules/task-definition"
+  source = "../../.modules/aws/ecs"
   family = "myapp-task"
   container_definitions = jsonencode([{
     name      = "my-container"
@@ -24,7 +24,7 @@ module "ecs_task_definition" {
 }
 
 module "ecs_service" {
-  source          = "terraform-aws-modules/ecs/aws//modules/service"
+  source          = "../../.modules/aws/ecs"
   name            = "myapp-service"
   cluster         = module.ecs_cluster.cluster_id
   task_definition = module.ecs_task_definition.task_definition_arn
