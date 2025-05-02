@@ -42,8 +42,10 @@ jobs:
       - name: Terraform Validate
         run: terraform -chdir=test/s3 validate
 
-      - name: Terraform Plan
-        run: terraform -chdir=test/s3 plan -out=tfplan
+      - name: Show Terraform Plan with Debugging
+        run: |
+         export TF_LOG=DEBUG
+         terraform show test/s3/tfplan
 
       - name: Show Terraform Plan
         run: terraform show test/s3/tfplan
