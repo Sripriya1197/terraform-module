@@ -32,7 +32,9 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform Init
-        run: terraform -chdir=test/s3 init
+        run: |
+         export TF_LOG=DEBUG
+         terraform -chdir=test/s3 init
 
       - name: Terraform Format Check
         run: terraform -chdir=test/s3 fmt -check
