@@ -1,5 +1,5 @@
 module "s3_bucket" {
-  source = ".modules/aws/s3"
+  source = "../../.modules/aws/s3"
 
   bucket = "my-s3-bucket"
   acl    = "private"
