@@ -8,7 +8,7 @@ on:
 jobs:
   terraform:   
     name: 'Terraform Init, Format, Validate, Plan, Apply'
-    runs-on: ubuntu-latest  # You can change this to 'self-hosted' if you use a self-hosted runner
+    runs-on: ubuntu-latest
 
     env:
       AWS_REGION: 'ap-south-1'
@@ -28,24 +28,23 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_tOKEN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform Init
-        run: terraform init -chdir=./test/S3
+        run: terraform -chdir=test/s3 init
 
       - name: Terraform Format Check
-        run: terraform fmt -check -chdir=./test/S3
+        run: terraform -chdir=test/s3 fmt -check
 
       - name: Terraform Validate
-        run: terraform validate -chdir=./test/S3
+        run: terraform -chdir=test/s3 validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan -chdir=./test/S3
+        run: terraform -chdir=test/s3 plan -out=tfplan
 
       - name: Show Terraform Plan
-        run: terraform show tfplan
+        run: terraform show test/s3/tfplan
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'  # Apply only on the main branch
-        run: terraform apply -auto-approve -chdir=./test/S3
+        if: github.ref == 'refs/heads/main'
+        run: terraform -chdir=test/s3 apply -auto-approve
