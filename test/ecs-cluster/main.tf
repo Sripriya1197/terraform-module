@@ -1,6 +1,6 @@
 module "ecs" {
   source       = "../../.modules/aws/ecs"
-  cluster_name = "ecscluster"
+  cluster_name = "my-ecs-cluster"
 
   services = {
     github-app = {
