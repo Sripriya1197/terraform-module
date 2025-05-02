@@ -34,22 +34,22 @@ jobs:
       - name: Terraform Init
         run: |
           export TF_LOG=DEBUG
-          terraform -chdir=test/s3 init
+          terraform -chdir=test/ecs-cluster init
 
       - name: Terraform Format Check
-        run: terraform -chdir=test/s3 fmt -check
+        run: terraform -chdir=test/ecs-cluster fmt -check
 
       - name: Terraform Validate
-        run: terraform -chdir=test/s3 validate
+        run: terraform -chdir=test/ecs-cluster validate
 
       - name: Terraform Plan
-        run: terraform -chdir=test/s3 plan -out=tfplan
+        run: terraform -chdir=test/ecs-cluster plan -out=tfplan
 
       - name: Show Terraform Plan with Debugging
         run: |
           export TF_LOG=DEBUG
-          terraform -chdir=test/s3 show tfplan
+          terraform -chdir=test/ecs-cluster show tfplan
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        run: terraform -chdir=test/s3 apply -auto-approve
+        run: terraform -chdir=test/ecs-cluster apply -auto-approve
