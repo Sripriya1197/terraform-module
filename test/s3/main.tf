@@ -1,3 +1,6 @@
+provider "aws" {
+  region = "ap-south-1"
+}
 module "s3_bucket" {
   source = "../../.modules/aws/s3"
 
