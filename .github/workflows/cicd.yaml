@@ -36,14 +36,18 @@ jobs:
           export TF_LOG=DEBUG
           terraform -chdir=test/ecs-cluster init
 
-      - name: Terraform Format Check
-        run: terraform -chdir=test/ecs-cluster fmt -check
+      - name: Terraform fmt -check
+        run: |
+         terraform fmt -check
+        working-directory: test/ecs-cluster
 
-      - name: Terraform Validate
-        run: terraform -chdir=test/ecs-cluster validate
+      - name: Terraform init
+        run: terraform init
+        working-directory: test/ecs-cluster
 
-      - name: Terraform Plan
-        run: terraform -chdir=test/ecs-cluster plan -out=tfplan
+      - name: Terraform plan
+        run: terraform plan
+        working-directory: test/ecs-cluster
 
       - name: Show Terraform Plan with Debugging
         run: |
