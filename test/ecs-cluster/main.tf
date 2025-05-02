@@ -1,5 +1,5 @@
 module "ecs_cluster" {
-  source             = "terraform-aws-modules/ecs/aws"
+  source = "../../.modules/aws/ecs-cluster"
   version            = "~> 4.0"
   name               = "my-ecs-cluster"
   capacity_providers = ["FARGATE"]
