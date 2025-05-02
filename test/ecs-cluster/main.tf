@@ -1,6 +1,5 @@
 module "ecs_cluster" {
   source = "../../.modules/aws/ecs-cluster"
-  version            = "~> 4.0"
   name               = "my-ecs-cluster"
   capacity_providers = ["FARGATE"]
   create_cluster     = true
