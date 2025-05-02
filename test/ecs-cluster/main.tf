@@ -26,14 +26,14 @@ module "ecs_task_definition" {
 
 module "ecs_service" {
   source          = "../../.modules/aws/ecs"
-  name            = "myapp-service"
-  cluster         = module.ecs_cluster.cluster_id
-  task_definition = module.ecs_task_definition.task_definition_arn
-  desired_count   = 1
-  launch_type     = "FARGATE"
-  network_configuration = {
-    subnets          = ["subnet-0697385b41cf20408"] # Your subnet ID here
-    security_groups  = ["sg-0ef52138839aef07e"]     # Your security group ID here
+  service_name    = "myapp-service" 
+  ecs_cluster_id  = module.ecs_cluster.cluster_id  
+  task_arn        = module.ecs_task_definition.task_definition_arn 
+  count           = 1  
+  fargate         = true  
+  network_config  = {    
+    subnets          = ["subnet-0697385b41cf20408"]
+    security_groups  = ["sg-0ef52138839aef07e"]
     assign_public_ip = true
   }
 }
