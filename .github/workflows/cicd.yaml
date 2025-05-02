@@ -43,6 +43,11 @@ jobs:
           key: terraform-${{ runner.os }}-${{ hashFiles('**/*.tf') }}
           restore-keys: |
             terraform-${{ runner.os }}-
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+         node-version: '18'  # or any LTS version
+
 
       - name: 'Install TFlint'
         run: |
