@@ -1,10 +1,34 @@
 module "ecs_cluster" {
   source = "../../.modules/aws/ecs"
   
-  cluster_name = "my-ecs-cluster"
-  capacity_providers = ["FARGATE"] # Check if this is a valid argument for your module
-  enable_managed_tags = true
-  propagate_tags = "TASK_DEFINITION" # Ensure this is valid
+   cluster_name = "my-ecs-cluster"
+
+  cluster_configuration = {
+    execute_command_configuration = {
+      logging = "OVERRIDE"
+      log_configuration = {
+        cloud_watch_log_group_name = "my-ecs-cluster-logs" 
+      }
+    }
+  }
+
+  fargate_capacity_providers = {
+    FARGATE = {
+      default_capacity_provider_strategy = {
+        weight = 50
+      }
+    }
+    FARGATE_SPOT = {
+      default_capacity_provider_strategy = {
+        weight = 50
+      }
+    }
+  }
+
+  tags = {
+    Environment = "Development"
+    Project     = "MyAppProject"
+  }
 }
 
 module "ecs_container_definition" {
