@@ -7,38 +7,34 @@ module "ecs_cluster" {
   propagate_tags = "TASK_DEFINITION" # Ensure this is valid
 }
 
-module "ecs_task_definition" {
+module "ecs_container_definition" {
   source = "../../.modules/aws/ecs"
   
-  family = "my-ecs-task"
-  container_definitions = jsonencode([{
-    name      = "my-ecs-container"
-    image     = "273354669111.dkr.ecr.ap-south-1.amazonaws.com/github-action:1.1.1"
-    essential = true
-    portMappings = [{
+  name      = "my-container"
+  cpu       = 256
+  memory    = 512
+  essential = true
+  image = "273354669111.dkr.ecr.ap-south-1.amazonaws.com/github-action:1.1.1"
+    port_mappings = [
+    {
+      name          = "my-container-port"
       containerPort = 80
       protocol      = "tcp"
-    }]
-  }])
-
-  cpu                      = "256"
-  memory                   = "512"
-  requires_compatibilities = ["FARGATE"]
-  network_mode             = "awsvpc"
+    }
+  ]
 }
 
 module "ecs_service" {
-  source = "../../.modules/aws/ecs"
-  
-  name             = "my-ecs-service"
-  cluster          = module.ecs_cluster.cluster_id  # Update `ecs_cluster_id` to `cluster` or the correct name
-  task_definition  = module.ecs_task_definition.task_definition_arn  # Ensure this is the correct reference
-  desired_count    = 1
-  launch_type      = "FARGATE"
-  
+  source          = "terraform-aws-modules/ecs/aws//modules/service"
+  service_name    = "my-ecs-service"  
+  cluster_id      = module.ecs_cluster.cluster_id  
+  task_definition = module.ecs_container_definition.task_definition_arn  
+  desired_count   = 1  
+  launch_type     = "FARGATE" 
+
   network_configuration = {
-    subnets          = ["subnet-0697385b41cf20408"]
-    security_groups  = ["sg-0ef52138839aef07e"]
-    assign_public_ip = true
+    subnets          = ["subnet-0697385b41cf20408"]  
+    security_groups  = ["sg-0ef52138839aef07e"]     
+    assign_public_ip = true  
   }
 }
