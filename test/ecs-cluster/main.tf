@@ -25,7 +25,7 @@ module "ecs_container_definition" {
 }
 
 module "ecs_service" {
-  source          = "terraform-aws-modules/ecs/aws//modules/service"
+  source          = "../../.modules/aws/ecs"
   service_name    = "my-ecs-service"  
   cluster_id      = module.ecs_cluster.cluster_id  
   task_definition = module.ecs_container_definition.task_definition_arn  
