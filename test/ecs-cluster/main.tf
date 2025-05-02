@@ -7,7 +7,7 @@ module "ecs_cluster" {
 }
 
 module "ecs_task_definition" {
-  source = "terraform-aws-modules/ecs/aws"
+  source = "../../.modules/aws/ecs"
   
   # ECS Task Definition Configuration
   family                   = "my-ecs-task"
