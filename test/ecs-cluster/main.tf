@@ -1,5 +1,5 @@
 module "ecs" {
-  source       = "terraform-aws-modules/ecs/aws"
+  source       = "../../.modules/aws/ecs"
   cluster_name = "my-ecs-cluster"
 
   services = {
