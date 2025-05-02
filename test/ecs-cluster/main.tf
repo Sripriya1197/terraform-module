@@ -1,28 +1,33 @@
 module "ecs" {
-  source       = "../../.modules/aws/ecs"
+  source       = "terraform-aws-modules/ecs/aws"
   cluster_name = "my-ecs-cluster"
 
+  cluster = true
+
+  # Define the ECS service in the services block
   services = {
     github-app = {
-      cpu    = 256
-      memory = 512
+      name            = "github-app"               
+      cpu             = 256
+      memory          = 512
+      desired_count   = 1                        
+      launch_type     = "FARGATE"                  
+      
+      # ECS container definitions
+      container_definitions = jsonencode([{
+        name         = "github-container"
+        image        = "273354669111.dkr.ecr.ap-south-1.amazonaws.com/github-action:1.1.1"
+        essential    = true
+        portMappings = [
+          {
+            containerPort = 80
+            protocol      = "tcp"
+          }
+        ]
+      }])
 
-      container_definitions = {
-        github-container = {
-          image     = "273354669111.dkr.ecr.ap-south-1.amazonaws.com/github-action:1.1.1"
-          essential = true
-          port_mappings = [
-            {
-              containerPort = 80
-              protocol      = "tcp"
-            }
-          ]
-        }
-      }
-
-      subnet_ids = [
-        "subnet-0697385b41cf20408"
-      ]
+      # Networking and security settings
+      subnet_ids = ["subnet-0697385b41cf20408"]
 
       security_group_rules = {
         allow_http = {
