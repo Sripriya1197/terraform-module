@@ -17,10 +17,6 @@ variable "tags" {
 variable "cluster_name" {
   description = "Name of the cluster (up to 255 letters, numbers, hyphens, and underscores)"
   type        = string
-<<<<<<< HEAD
-=======
-  default     = "my-ecs-cluster"
->>>>>>> 9b24b0d (My local updates)
 }
 
 variable "cluster_configuration" {
