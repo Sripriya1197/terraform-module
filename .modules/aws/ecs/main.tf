@@ -2,5 +2,5 @@ module "ecs" {
   source  = "terraform-aws-modules/ecs/aws"
   version = "5.12.1"
 
-  cluster_name = var.cluster_name 
+  cluster_name = my-ecs-tf-cluster
 }
