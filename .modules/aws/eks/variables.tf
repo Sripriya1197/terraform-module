@@ -1,3 +1,6 @@
+
+
+
 variable "create" {
   description = "Controls if resources should be created (affects nearly all resources)"
   type        = bool
@@ -315,7 +318,7 @@ variable "cluster_security_group_id" {
 
 variable "vpc_id" {
   description = "ID of the VPC where the cluster security group will be provisioned"
-  type        = strin
+  type        = string
 }
 
 variable "cluster_security_group_name" {
