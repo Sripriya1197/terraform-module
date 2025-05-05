@@ -23,7 +23,6 @@ variable "prefix_separator" {
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = ""
 }
 
 variable "cluster_version" {
@@ -316,8 +315,7 @@ variable "cluster_security_group_id" {
 
 variable "vpc_id" {
   description = "ID of the VPC where the cluster security group will be provisioned"
-  type        = string
-  default     = null
+  type        = strin
 }
 
 variable "cluster_security_group_name" {
