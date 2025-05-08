@@ -1,3 +1,9 @@
+variable "env" {
+  description = "Name of the environment"
+  type        = string
+  default     = ""
+}
+
 variable "create" {
   description = "Determines whether resources will be created (affects all resources)"
   type        = bool
