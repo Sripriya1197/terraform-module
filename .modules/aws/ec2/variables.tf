@@ -3,11 +3,6 @@ variable "name" {
   type        = string
   default     = ""
 }
-variable "region" {
-  description = "Region where the resource(s) will be managed. Defaults to the Region set in the provider configuration"
-  type        = string
-  default     = null
-}
 variable "ami" {
   description = "ID of AMI to use for the instance"
   type        = string
@@ -35,6 +30,6 @@ variable "vpc_security_group_ids" {
   default     = []
 }
 variable "tags" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }

@@ -4,12 +4,15 @@ module "ec2-instance" {
 }
 resource "aws_instance" "this" {
   //   count              =   var.count 
-  region                 = var.region
-  ami                    = var.region
+  ami                    = var.ami
   key_name               = var.key_name
   instance_type          = var.instance_type
   subnet_id              = var.subnet_id
   vpc_security_group_ids = var.vpc_security_group_ids
 
- tags = var.tags
+
+  tags = {
+    Name = var.tags
+  }
+
 }
