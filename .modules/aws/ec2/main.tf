@@ -1,18 +1,14 @@
-module "ec2-instance" {
-  source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "5.8.0"
+provider "aws" {
+  region = "ap-south-1"
 }
-resource "aws_instance" "this" {
-  //   count              =   var.count 
+
+module "ec2_instance" {
+  source = "git::https://github.com/Sripriya1197/terraform-module.git//.modules/aws/ec2?ref=main"
+
   ami                    = var.ami
   key_name               = var.key_name
   instance_type          = var.instance_type
   subnet_id              = var.subnet_id
   vpc_security_group_ids = var.vpc_security_group_ids
-
-
-  tags = {
-    Name = var.tags
-  }
-
+  tags                   = { Name = var.name }
 }
